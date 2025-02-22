@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      
   pull_request:
     branches:
       - main
@@ -37,7 +36,7 @@ jobs:
 
     - name: Debug: List files in the root directory
       run: |
-        ls -alh  # This will list all files and directories to confirm if gradlew exists
+        ls -alh  # List files in the root directory to check if gradlew exists
 
     - name: Ensure gradlew is executable
       run: |
@@ -50,8 +49,16 @@ jobs:
 
     - name: Build with Gradle
       run: |
-        if [[ "$RUNNER_OS" == "Windows" ]]; then ./gradlew.bat build --no-daemon; else ./gradlew build --no-daemon; fi
+        if [[ "$RUNNER_OS" == "Windows" ]]; then
+          ./gradlew.bat build --no-daemon
+        else
+          ./gradlew build --no-daemon
+        fi
 
     - name: Run tests
       run: |
-        if [[ "$RUNNER_OS" == "Windows" ]]; then ./gradlew.bat test --no-daemon; else ./gradlew test --no-daemon; fi
+        if [[ "$RUNNER_OS" == "Windows" ]]; then
+          ./gradlew.bat test --no-daemon
+        else
+          ./gradlew test --no-daemon
+        fi
