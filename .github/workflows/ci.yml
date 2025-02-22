@@ -10,11 +10,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Or use 'windows-latest' if you want to run it on a Windows runner.
+    runs-on: ubuntu-latest  # Change to 'windows-latest' if you want to run on a Windows runner.
 
     strategy:
       matrix:
-        java: [17]
+        java: [17, 11]
 
     steps:
     - name: Checkout code
@@ -34,10 +34,15 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
+    - name: Ensure gradlew is executable
+      run: chmod +x gradlew
+
     - name: Build with Gradle
       run: |
+        cd $GITHUB_WORKSPACE  # Ensure we are in the root of the repository
         if [[ "$RUNNER_OS" == "Windows" ]]; then ./gradlew.bat build --no-daemon; else ./gradlew build --no-daemon; fi
 
     - name: Run tests
       run: |
+        cd $GITHUB_WORKSPACE  # Ensure we are in the root of the repository
         if [[ "$RUNNER_OS" == "Windows" ]]; then ./gradlew.bat test --no-daemon; else ./gradlew test --no-daemon; fi
