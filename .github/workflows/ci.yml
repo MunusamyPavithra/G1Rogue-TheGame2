@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Java CI without Gradle
 
 on: [push, pull_request]
 
@@ -16,26 +16,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # Debug: List all files in the project directory
-      - name: Debug - List all project files
-        run: ls -lahR
+      - name: Compile Java files
+        run: javac -d out src/**/*.java
 
-      # Debug: Check if gradlew exists inside ROGUE/
-      - name: Debug - List files inside ROGUE directory
-        run: ls -lah ROGUE/
-
-      # Ensure gradlew is present, exit if missing
-      - name: Verify Gradle wrapper exists
-        run: |
-          if [ ! -f ROGUE/gradlew ]; then
-            echo "❌ Error: gradlew not found!"
-            exit 1
-          fi
-
-      # Ensure gradlew has execute permissions
-      - name: Grant execute permission for Gradle wrapper
-        run: chmod +x ROGUE/gradlew
-
-      # Build project using Gradle
-      - name: Build with Gradle
-        run: cd ROGUE && ./gradlew build
+      - name: Run Java Application
+        run: java -cp out MainClassName
