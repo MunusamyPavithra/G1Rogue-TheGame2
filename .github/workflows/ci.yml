@@ -20,12 +20,4 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: List files in src/main/roguegame
-        run: |
-          ls -R src/main/roguegame
-
-      - name: Compile Java files
-        run: javac -d out src/main/roguegame/**/*.java
-
-      - name: Run Java Application
-        run: java -cp out roguegame.DungeonGame
+    
