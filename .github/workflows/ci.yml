@@ -16,18 +16,26 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Debug - List project files
-        run: ls -R
+      # Debug: List all files in the project directory
+      - name: Debug - List all project files
+        run: ls -lahR
 
+      # Debug: Check if gradlew exists inside ROGUE/
+      - name: Debug - List files inside ROGUE directory
+        run: ls -lah ROGUE/
+
+      # Ensure gradlew is present, exit if missing
       - name: Verify Gradle wrapper exists
         run: |
           if [ ! -f ROGUE/gradlew ]; then
-            echo "Error: gradlew not found!"
+            echo "❌ Error: gradlew not found!"
             exit 1
           fi
 
-      - name: Grant execute permission for Gradle
+      # Ensure gradlew has execute permissions
+      - name: Grant execute permission for Gradle wrapper
         run: chmod +x ROGUE/gradlew
 
+      # Build project using Gradle
       - name: Build with Gradle
         run: cd ROGUE && ./gradlew build
