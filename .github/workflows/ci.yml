@@ -17,10 +17,12 @@ jobs:
           java-version: '17'
 
       - name: List files in src directory
-        run: ls -R src/
+        run: |
+          cd src/main/roguegame
+          ls -l
 
       - name: Compile Java files
-        run: javac -d out src/main/**/*.java
+        run: javac -d out src/main/roguegame/**/*.java
 
       - name: Run Java Application
-        run: java -cp out com.yourpackage.MainClassName
+        run: java -cp out roguegame.DungeonGame
