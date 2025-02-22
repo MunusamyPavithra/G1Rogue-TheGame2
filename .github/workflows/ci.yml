@@ -34,9 +34,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
-    - name: Ensure gradlew is executable
-      run: chmod +x gradlew
-
     - name: Build with Gradle
       run: |
         if [[ "$RUNNER_OS" == "Windows" ]]; then ./gradlew.bat build --no-daemon; else ./gradlew build --no-daemon; fi
