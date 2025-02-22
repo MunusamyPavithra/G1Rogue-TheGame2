@@ -1,4 +1,4 @@
-name: Java CI without Gradle
+name: Java CI with javac
 
 on: [push, pull_request]
 
@@ -16,8 +16,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: List files in src directory
+        run: ls -R src/
+
       - name: Compile Java files
-        run: javac -d out src/**/*.java
+        run: javac -d out src/main/**/*.java
 
       - name: Run Java Application
-        run: java -cp out MainClassName
+        run: java -cp out com.yourpackage.MainClassName
