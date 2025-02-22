@@ -34,15 +34,23 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
+    - name: Debug: List files in the root directory
+      run: |
+        ls -alh  # This will list all files and directories to confirm if gradlew exists
+
     - name: Ensure gradlew is executable
-      run: chmod +x gradlew
+      run: |
+        if [ -f "./gradlew" ]; then
+          chmod +x gradlew
+        else
+          echo "gradlew not found in the current directory."
+          exit 1
+        fi
 
     - name: Build with Gradle
       run: |
-        cd $GITHUB_WORKSPACE  # Ensure we are in the root of the repository
         if [[ "$RUNNER_OS" == "Windows" ]]; then ./gradlew.bat build --no-daemon; else ./gradlew build --no-daemon; fi
 
     - name: Run tests
       run: |
-        cd $GITHUB_WORKSPACE  # Ensure we are in the root of the repository
         if [[ "$RUNNER_OS" == "Windows" ]]; then ./gradlew.bat test --no-daemon; else ./gradlew test --no-daemon; fi
