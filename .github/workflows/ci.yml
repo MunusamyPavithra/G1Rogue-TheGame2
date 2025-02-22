@@ -10,12 +10,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Change to 'windows-latest' if running on a Windows runner
+    runs-on: ubuntu-latest  # Or use 'windows-latest' if you want to run it on a Windows runner.
 
     strategy:
       matrix:
-        java: [11]
-    
+        java: [17, 11]
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -33,6 +33,9 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
+
+    - name: Ensure gradlew is executable
+      run: chmod +x gradlew
 
     - name: Build with Gradle
       run: |
